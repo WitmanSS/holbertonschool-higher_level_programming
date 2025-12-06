@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Product Display</title>
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <main style="padding: 20px;">
+        <h2>Product Information</h2>
+
+        {# --- Error Handling --- #}
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        
+        {# --- Data Display --- #}
+        {% if products %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# Loop through the list of products #}
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.category }}</td>
+                            <td>${{ "{:,.2f}".format(product.price) }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {# --- Handle No Products/No Error (e.g., empty list from valid source) --- #}
+        {% elif not error %}
+            <p>No products to display.</p>
+        {% endif %}
+
+    </main>
+</body>
+</html>
